@@ -3,7 +3,7 @@ filetype off                  " Req'd for vundle
 set rtp+=~/.vim/bundle/vundle " Vundle prelude
 call vundle#rc()              " ^
 
-Plugin 'Shougo/neocomplete.vim'
+Plugin 'scrooloose/syntastic'
 Plugin 'Raimondi/delimitMate'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-airline/vim-airline'
@@ -11,7 +11,9 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'myusuf3/numbers.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Yggdroot/indentLine'
+Plugin 'valloric/youcompleteme'
 Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-endwise'
 
 " Post-vundle
 filetype plugin indent on     " Req'd for vundle
@@ -66,6 +68,7 @@ set undolevels=1000           " Number of undo levels
 set backspace=indent,eol,start  " Backspace behaviour
 :nnoremap <C-n> :bnext<CR>
 :nnoremap <C-p> :bprevious<CR>
+autocmd FileType html setlocal shiftwidth=4 tabstop=4  " Tab size changes to 4 on html files
 
 " resolve escape delay on vim modes
 set timeout         " Do time out on mappings and others
@@ -84,45 +87,21 @@ if !has('gui_running')
     augroup END
 endif
 
-" Neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#auto_completion_start_length = 1
-let g:neocomplete#sources#buffer#cache_limit_size = 50000
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
 " delimitMate
 let delimitMate_expand_cr = 1
 filetype indent plugin on
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_force_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 "autoindent
 set conceallevel=1
 let g:indentLine_conceallevel=1
 
+" syntastiac
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
