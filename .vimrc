@@ -14,6 +14,7 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'valloric/youcompleteme'
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-endwise'
+Plugin 'sirver/ultisnips'
 
 " Post-vundle
 filetype plugin indent on     " Req'd for vundle
@@ -42,11 +43,7 @@ syntax on                     " Syntax highlighting
 set nocompatible              " Eliminate backwards-compatability
 set number                    " Show line numbers
 set nowrap                    " Stop line wrapping (lines extend beyond page)
-set noswapfile			" stop generating .swp files
-" Line wrap
-"set linebreak                 " Break lines at word (requires Wrap lines)
-"set showbreak=+++             " Wrap-broken line prefix
-"set textwidth=100             " Line wrap (number of cols)
+set noswapfile		      " stop generating .swp files
 set showmatch                 " Highlight matching brace
 set visualbell                " Use visual bell (no beeping)
 set autoread		      " automatically update
@@ -66,9 +63,12 @@ set softtabstop=2             " Number of spaces per Tab
 set ruler                     " Show row and column ruler information
 set undolevels=1000           " Number of undo levels
 set backspace=indent,eol,start  " Backspace behaviour
+
+autocmd FileType html setlocal shiftwidth=4 tabstop=4  " Tab size changes to 4 on html files
+autocmd FileType java setlocal shiftwidth=4 tabstop=4  " Tab size changes to 4 on .java files
+
 :nnoremap <C-n> :bnext<CR>
 :nnoremap <C-p> :bprevious<CR>
-autocmd FileType html setlocal shiftwidth=4 tabstop=4  " Tab size changes to 4 on html files
 
 " resolve escape delay on vim modes
 set timeout         " Do time out on mappings and others
@@ -105,3 +105,15 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_html_tidy_ignore_errors = ['proprietary attribute "hidden"'] 
+
+" Omnicomplete (for CSS / HTML)
+filetype plugin indent on
+set omnifunc=syntaxcomplete#Complete
+
+if has("autocmd") 
+  autocmd Filetype java setlocal omnifunc=javacomplete#Complete 
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+endif 
+
+
