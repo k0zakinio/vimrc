@@ -115,4 +115,5 @@ if has("autocmd")
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 endif 
 
-
+" Disable visual bell
+set t_vb=
