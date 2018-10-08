@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 git clone git@github.com:k0zakinio/vimrc.git
 cp vimrc/.vimrc ~/.vimrc
